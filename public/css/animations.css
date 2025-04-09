@@ -1,0 +1,779 @@
+/* Estilos para la animación de carga */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; /* Cambiar a transparente para que se vean las mitades */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s, visibility 0.5s;
+    perspective: 1000px;
+    overflow: hidden;
+}
+
+.loading-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Fondo de Pokédex que ocupa toda la pantalla */
+.pokedex-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #e3350d; /* Color rojo de Pokédex */
+    transform-style: preserve-3d;
+    z-index: 1;
+    /* Eliminar la animación de transformación */
+    /* animation: transformToPokedex 0.5s ease-out 1s forwards; */
+}
+
+/* Mitades de la Pokédex para la animación */
+.pokedex-top-half {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #e3350d;
+    z-index: 1;
+    transform-origin: bottom;
+    transition: transform 0.5s ease-in-out; /* Aumentar de 1s a 2s */
+}
+
+.pokedex-bottom-half {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: #e3350d;
+    z-index: 1;
+    transform-origin: top;
+    transition: transform 0.5s ease-in-out; /* Aumentar de 1s a 2s */
+}
+
+.pokedex-middle-top {
+    position: absolute;
+    bottom: 0; /* Ubicarla en la parte inferior de la mitad superior */
+    width: 100%;
+    height: 1.5px; /* La mitad del grosor de la línea original */
+    background-color: black;
+    z-index: 2;
+}
+
+.pokedex-middle-bottom {
+    position: absolute;
+    top: 0; /* Ubicarla en la parte superior de la mitad inferior */
+    width: 100%;
+    height: 1.5px; /* La mitad del grosor de la línea original */
+    background-color: black;
+    z-index: 2;
+}
+
+/* Clases para activar la animación */
+.pokedex-top-half.open {
+    transform: translateY(-100%);
+}
+
+.pokedex-bottom-half.open {
+    transform: translateY(100%);
+}
+
+/* Línea divisoria de la Pokédex a la mitad de la pantalla - AHORA MÁS FINA */
+.pokedex-middle {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 3px; /* Reducido de 10px a 3px para hacerla más fina */
+    background-color: black;
+    z-index: 2;
+    transform: translateY(-50%);
+}
+
+.big-light {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #0084ff 70%);
+    border: 3px solid #333;
+    box-shadow: 0 0 20px rgba(0, 132, 255, 0.8);
+    animation: glow 1.5s infinite alternate;
+}
+
+.small-lights {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.small-light {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+.small-light.red { 
+    background-color: #ff0000;
+    box-shadow: 0 0 10px rgba(255,0,0,0.7);
+}
+
+.small-light.yellow { 
+    background-color: #ffff00;
+    box-shadow: 0 0 10px rgba(255,255,0,0.7);
+}
+
+.small-light.green { 
+    background-color: #00ff00;
+    box-shadow: 0 0 10px rgba(0,255,0,0.7);
+}
+
+/* Contenedor de la animación central */
+.animation-container {
+    position: absolute;
+    top: 50%; /* Centrar exactamente en la mitad de la pantalla */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrado perfecto */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    z-index: 5;
+}
+
+/* Contenedor de la Pokeball */
+.pokeball-container {
+    perspective: 1000px;
+    width: 250px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Eliminar cualquier margen que pueda estar desplazando la pokeball */
+    margin: 0;
+}
+
+/* Pokeball */
+.pokeball {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    /* Asegurar que no haya desplazamiento vertical */
+    margin-top: 0;
+    animation: 
+        zoomIn 1s ease-in-out forwards,
+        shake 0.2s 1.5s ease-in-out 5;
+}
+
+/* Efecto hover para mostrar interactividad */
+.pokeball:hover {
+    transform: scale(1.05);
+}
+
+/* Clase para la animación de vibración continua */
+.pokeball.shake-effect {
+    animation: gentle-shake 1.5s ease-in-out infinite;
+}
+
+/* Animación de vibración suave */
+@keyframes gentle-shake {
+    0%, 100% { 
+        transform: translateX(0) rotate(0deg); 
+    }
+    25% { 
+        transform: translateX(-3px) rotate(-1deg); 
+    }
+    50% { 
+        transform: translateX(3px) rotate(1deg); 
+    }
+    75% { 
+        transform: translateX(-3px) rotate(-0.5deg); 
+    }
+}
+
+/* Parte superior de la Pokeball (roja) */
+.pokeball-top {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #e3350d;
+    border-radius: 100px 100px 0 0;
+    transform-origin: bottom;
+    z-index: 7;
+    border: 8px solid black;
+    border-bottom: none;
+    box-sizing: border-box;
+}
+
+.pokeball-top.open {
+    animation: openPokeball 1s ease-in-out forwards; /* Aumentar de 1s a 2s */
+}
+
+/* Parte inferior de la Pokeball (blanca) */
+.pokeball-bottom {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 50%;
+    background-color: white;
+    border-radius: 0 0 100px 100px;
+    transform-origin: top;
+    z-index: 7;
+    border: 8px solid black;
+    border-top: none;
+    box-sizing: border-box;
+    position: relative;
+}
+
+.pokeball-bottom.open {
+    animation: openPokeballBottom 1s ease-in-out forwards; /* Aumentar de 1s a 2s */
+}
+
+/* Mitad superior de la línea media de la Pokeball */
+.pokeball-middle-top {
+    position: absolute;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: 2px;
+    background-color: black;
+    z-index: 7;
+    bottom: 0;
+}
+
+/* Mitad inferior de la línea media de la Pokeball */
+.pokeball-middle-bottom {
+    position: absolute;
+    left: -8px;
+    width: calc(100% + 16px);
+    height: 2px;
+    background-color: black;
+    z-index: 7;
+    top: 0;
+}
+
+/* Centro de la Pokeball */
+.pokeball-center {
+    position: absolute;
+    top: -29px; /* Ajustar para posicionar el centro justo en la línea media */
+    left: calc(50% - 25px); /* Centrar horizontalmente */
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    border: 8px solid black;
+    z-index: 15;
+    animation: blinkLight 0.6s infinite;
+}
+
+.loading-text {
+    position: absolute;
+    bottom: 20%; /* Mover el texto más abajo */
+    width: 100%;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    font-size: 24px;
+    color: white;
+    font-weight: bold;
+    opacity: 0;
+    animation: textFadeIn 0.5s 1s forwards;
+    z-index: 10;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    display: none !important;
+}
+
+.pokedex-container {
+    perspective: 1000px;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pokedex {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    transform-style: preserve-3d;
+    /* Secuencia de animaciones */
+    animation: 
+        zoomIn 1s ease-in-out forwards,
+        transformToPokedex 0.5s ease-out 1s forwards,
+        shake 0.2s ease-in-out 1.5s 5;
+}
+
+/* Parte superior de la Pokédex */
+.pokedex-top {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background-color: #e3350d;
+    border-radius: 100px 100px 0 0;
+    transform-origin: bottom;
+    z-index: 2;
+    box-shadow: inset 0 5px 15px rgba(0,0,0,0.3);
+    /* Se animará con JavaScript para abrirse */
+}
+
+.pokedex-top.open {
+    animation: openTop 1s ease-in-out forwards;
+}
+
+/* Parte inferior de la Pokédex */
+.pokedex-bottom {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    height: 50%;
+    background-color: #e3350d;
+    border-radius: 0 0 100px 100px;
+    transform-origin: top;
+    z-index: 1;
+    box-shadow: inset 0 -5px 15px rgba(0,0,0,0.3);
+    /* Se animará con JavaScript para abrirse */
+}
+
+.pokedex-bottom.open {
+    animation: openBottom 1s ease-in-out forwards;
+}
+
+/* Línea media de la Pokédex */
+.pokedex-middle {
+    position: absolute;
+    top: 45%;
+    width: 100%;
+    height: 10%;
+    background-color: black;
+    z-index: 3;
+}
+
+/* Centro de la Pokédex */
+.pokedex-center {
+    position: absolute;
+    top: 35%;
+    left: 35%;
+    width: 30%;
+    height: 30%;
+    background-color: white;
+    border-radius: 50%;
+    border: 8px solid black;
+    z-index: 4;
+    animation: blinkLight 0.6s infinite;
+}
+
+/* Luces de la Pokédex */
+.lights-container {
+    position: absolute;
+    top: 20px; /* Mover más arriba */
+    left: 20px; /* Mover más a la izquierda */
+    display: flex;
+    gap: 10px;
+    opacity: 1; /* Siempre visible */
+    z-index: 10; /* Mayor z-index para asegurar que siempre esté visible */
+}
+
+.big-light {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #fff, #0084ff 70%);
+    border: 2px solid #333;
+    box-shadow: 0 0 10px rgba(0, 132, 255, 0.8);
+    animation: glow 1.5s infinite alternate;
+}
+
+.small-lights {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+.small-light {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid #333;
+}
+
+.small-light.red { 
+    background-color: #ff0000;
+    box-shadow: 0 0 5px rgba(255,0,0,0.7);
+}
+
+.small-light.yellow { 
+    background-color: #ffff00;
+    box-shadow: 0 0 5px rgba(255,255,0,0.7);
+}
+
+.small-light.green { 
+    background-color: #00ff00;
+    box-shadow: 0 0 5px rgba(0,255,0,0.7);
+}
+
+/* Definición de las animaciones */
+@keyframes zoomIn {
+    0% { 
+        transform: scale(0) rotate(180deg); 
+        opacity: 0;
+    }
+    50% { 
+        transform: scale(1.2) rotate(-30deg);
+        opacity: 1;
+    }
+    75% { 
+        transform: scale(0.9) rotate(10deg);
+    }
+    100% { 
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+/* Eliminar esta animación que causa el efecto de zoom out
+@keyframes transformToPokedex {
+    0% {
+        border-radius: 50%;
+    }
+    100% {
+        border-radius: 0;
+        background-color: #e3350d;
+    }
+}
+*/
+
+@keyframes shake {
+    0%, 100% { 
+        transform: translateX(0) rotate(0deg); 
+    }
+    25% { 
+        transform: translateX(-5px) rotate(-2deg); 
+    }
+    50% { 
+        transform: translateX(5px) rotate(2deg); 
+    }
+    75% { 
+        transform: translateX(-5px) rotate(-1deg); 
+    }
+}
+
+/* Nuevas animaciones de apertura que mueven las partes hacia arriba/abajo en lugar de rotarlas */
+@keyframes openPokeball {
+    0% { 
+        transform: translateY(0); 
+    }
+    100% { 
+        transform: translateY(-200vh) rotateX(-30deg); /* Usar vh para asegurar que salga de la pantalla */
+    }
+}
+
+@keyframes openPokeballBottom {
+    0% { 
+        transform: translateY(0); 
+    }
+    100% { 
+        transform: translateY(200vh) rotateX(30deg); /* Usar vh para asegurar que salga de la pantalla */
+    }
+}
+
+@keyframes blinkLight {
+    0%, 50%, 100% { 
+        background-color: white; 
+        box-shadow: 0 0 5px white; 
+    }
+    25%, 75% { 
+        background-color: #f0f0f0; 
+        box-shadow: 0 0 15px white; 
+    }
+}
+
+@keyframes glow {
+    0% { 
+        box-shadow: 0 0 5px #0084ff; 
+    }
+    100% { 
+        box-shadow: 0 0 15px #0084ff, 0 0 25px #0084ff; 
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes textFadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+/* Animaciones para la Pokeball */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
+}
+
+@keyframes blink {
+    0%, 50%, 100% { background-color: white; }
+    25%, 75% { background-color: #f0f0f0; }
+}
+
+/* Animaciones para las estadísticas de Pokémon */
+.stat-fill {
+    height: 100%;
+    border-radius: 10px;
+    background-color: #4caf50;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: fillBar 1s forwards ease-out;
+}
+
+@keyframes fillBar {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+/* Animación para tarjetas de Pokémon */
+.pokemon-card {
+    animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación para detalles de Pokémon */
+.modal.active .modal-content {
+    animation: scaleIn 0.3s forwards;
+}
+
+@keyframes scaleIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Animación para los tipos de Pokémon - Corregida para mantener opacidad */
+.type-badge {
+    opacity: 1; /* Asegurar que siempre sea visible */
+}
+
+@keyframes popIn {
+    0% { transform: scale(0); opacity: 0.5; }
+    70% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Añadir estas nuevas animaciones */
+@keyframes openPokedexTop {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-200vh); /* Usar vh para asegurar que salga completamente de la pantalla */
+    }
+}
+
+@keyframes openPokedexBottom {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(200vh); /* Usar vh para asegurar que salga completamente de la pantalla */
+    }
+}
+
+/* Mejoras responsivas para que se vea todo correctamente en cualquier pantalla */
+
+/* Media queries para asegurar que las imágenes se vean correctamente */
+@media screen and (max-width: 1200px) {
+    .animation-container {
+        width: 90%;
+        max-width: 450px;
+    }
+}
+
+/* Mejoras para responsive en el contenido del modal */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-width: 600px;
+    }
+    
+    .detail-body {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .detail-image {
+        order: -1; /* Imagen primero en móviles */
+        height: 200px;
+        padding: 10px;
+    }
+    
+    .detail-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .info-section {
+        padding: 10px;
+    }
+    
+    .info-section h3 {
+        font-size: 1.1rem;
+    }
+    
+    /* Asegurar que las estadísticas no se corten */
+    .stats {
+        gap: 10px;
+    }
+    
+    .stat-bar {
+        height: 8px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .detail-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 15px;
+    }
+    
+    .detail-header .pokemon-types {
+        margin-top: 10px;
+    }
+    
+    .type-badge {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* Mejorar visualización de imágenes */
+.pokemon-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain; /* Importante: evita que las imágenes se recorten */
+    margin: 0 auto;
+}
+
+.detail-image img {
+    max-width: 100%;
+    max-height: 230px;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Ajustar las tarjetas para diferentes dispositivos */
+@media screen and (max-width: 992px) {
+    .pokemon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 15px;
+    }
+    
+    .pokemon-card {
+        padding: 12px;
+    }
+    
+    .pokemon-card img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .pokemon-grid {
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+        gap: 10px;
+    }
+    
+    .pokemon-card {
+        padding: 10px;
+    }
+}
+
+/* Correcciones específicas para el modal */
+.modal {
+    overflow-y: auto;
+    padding: 20px 0;
+}
+
+.modal-content {
+    max-height: none; /* Eliminar límite de altura para evitar scroll interno */
+}
+
+.detail-body {
+    padding: 20px;
+    background-color: white;
+    color: #333;
+    border-radius: 0 0 20px 20px;
+}
+
+/* Estilos para las estadísticas */
+.stats {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+}
+
+.stat-bar {
+    height: 10px;
+    background-color: #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Darle más espacio a la información básica */
+.info-section p {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Asegurar que el modal se centre correctamente */
+.modal.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokédex</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <!-- Luces de la Pokédex -->
+    <div class="lights-container">
+        <div class="big-light"></div>
+        <div class="small-lights">
+            <div class="small-light red"></div>
+            <div class="small-light yellow"></div>
+            <div class="small-light green"></div>
+        </div>
+    </div>
+
+    <!-- Overlay de carga con la Pokédex como fondo y Pokeball en el centro -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <!-- Dividir explícitamente el fondo en dos mitades para la animación -->
+        <div class="pokedex-top-half">
+            <!-- Añadir la mitad superior de la línea negra dentro -->
+            <div class="pokedex-middle-top"></div>
+        </div>
+        <div class="pokedex-bottom-half">
+            <!-- Añadir la mitad inferior de la línea negra dentro -->
+            <div class="pokedex-middle-bottom"></div>
+        </div>
+        
+        <!-- Eliminar la línea central única
+        <div class="pokedex-middle"></div>
+        -->
+        
+        <!-- Contenedor central con la Pokeball -->
+        <div class="animation-container">
+            <!-- En el loadingOverlay, dentro de la pokeball -->
+            <div class="pokeball-container">
+                <div class="pokeball">
+                    <div class="pokeball-top">
+                        <div class="pokeball-middle-top"></div>
+                    </div>
+                    <div class="pokeball-bottom">
+                        <div class="pokeball-middle-bottom"></div>
+                        <!-- Mover el centro dentro de la parte inferior de la Pokeball -->
+                        <div class="pokeball-center"></div>
+                    </div>
+                    <!-- Eliminar el contenedor separado
+                    <div class="pokeball-center-container">
+                        <div class="pokeball-center"></div>
+                    </div>
+                    -->
+                </div>
+            </div>
+            <div class="loading-text">Iniciando Pokédex...</div>
+        </div>
+    </div>
+
+    <header>
+        <h1>Pokédex</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar Pokémon...">
+            <button id="searchButton">Buscar</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters">
+            <div class="pagination">
+                <button id="prevPage">Anterior</button>
+                <span id="currentPage">Página 1</span>
+                <button id="nextPage">Siguiente</button>
+            </div>
+            <select id="limitSelector">
+                <option value="10">10 por página</option>
+                <option value="20" selected>20 por página</option>
+                <option value="50">50 por página</option>
+                <option value="100">100 por página</option>
+            </select>
+        </div>
+
+        <div id="pokemonList" class="pokemon-grid"></div>
+
+        <div id="pokemonDetail" class="modal hidden">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="detailContent"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Desarrollado con PokeAPI</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+</body>
+</html>
