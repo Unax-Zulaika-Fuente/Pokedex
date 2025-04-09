@@ -72,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('click', (e) => {
         if (e.target === pokemonDetail) {
             pokemonDetail.classList.remove('active');
+            document.body.classList.remove('modal-open');
         }
     });
 

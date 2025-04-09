@@ -1,5 +1,8 @@
 // Control de la animación de carga inicial con secuencia interactiva
 document.addEventListener('DOMContentLoaded', () => {
+    // Desactivar scroll desde el principio al cargar la página
+    document.body.classList.add('modal-open');
+    
     const loadingOverlay = document.getElementById('loadingOverlay');
     const pokeball = document.querySelector('.pokeball');
     const pokeballTop = document.querySelector('.pokeball-top');
@@ -25,6 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Sin texto - mantener vacío
         loadingText.textContent = "";
+        
+        // Desactivar scroll mientras la animación está activa
+        document.body.classList.add('modal-open');
         
         // Detener cualquier animación en curso antes de aplicar la nueva
         pokeball.style.animation = 'none';
@@ -53,6 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Eliminar completamente después de que termine la transición
                     setTimeout(() => {
                         loadingOverlay.style.display = 'none';
+                        // Restaurar scroll cuando la animación termina completamente
+                        document.body.classList.remove('modal-open');
                     }, 500);
                 }, 2500);
             }, 500); // 500ms = duración de la animación de vibración fuerte
