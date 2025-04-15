@@ -1,6 +1,6 @@
 # Pokedex API
 
-Una aplicación web que proporciona información detallada sobre Pokémon utilizando la [PokeAPI](https://pokeapi.co/). Este proyecto fue desarrollado principalmente utilizando GitHub Copilot con intervenciones mínimas.
+Esta es una aplicación web que muestra información sobre Pokémons usando la [PokeAPI](https://pokeapi.co/). La he creado principalmente con GitHub Copilot, metiendo mano solo cuando era necesario para ver hasta dónde podía llegar la IA con la mínima intervención por mi parte.
 
 ![Pokedex Screenshot](./public/img/screenshot.png)
 
